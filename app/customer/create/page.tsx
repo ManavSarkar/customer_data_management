@@ -29,11 +29,14 @@ const CreateCustomer = () => {
         phone: phone,
         address: address,
       };
-      const response = await fetch(`http://localhost:5000/api/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const response = await fetch(
+        `https://customer-api-9a8z.onrender.com/api/`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
       console.log(response);
       var customer: Customer = await response.json();
 

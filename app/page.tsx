@@ -28,9 +28,12 @@ export default function Home() {
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://customer-api-9a8z.onrender.com/api/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       console.log(response);
       if (response.status == 200) {
         getAllCustomers();

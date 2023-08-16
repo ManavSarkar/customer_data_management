@@ -47,11 +47,14 @@ const UpdateCustomer = () => {
         phone: phone,
         address: address,
       };
-      const response = await fetch(`http://localhost:5000/api/${params.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const response = await fetch(
+        `https://customer-api-9a8z.onrender.com/api/${params.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
       console.log(response);
       if (response.status == 200) {
         router.push("/customer/view/" + params.id);
