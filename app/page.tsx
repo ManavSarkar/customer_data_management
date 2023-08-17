@@ -8,6 +8,7 @@ import { get } from "http";
 export default function Home() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   // get all customers from backend
   const getAllCustomers = async () => {
     try {
@@ -21,6 +22,7 @@ export default function Home() {
         customers.push(data[i]);
       }
       setCustomers(customers);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -46,6 +48,19 @@ export default function Home() {
   useEffect(() => {
     getAllCustomers();
   }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "80vh" }}
+        >
+          <div className="loader ease-linear rounded-3xl border-8 border-t-8 border-gray-200 h-32 w-32 animate-spin"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-5">

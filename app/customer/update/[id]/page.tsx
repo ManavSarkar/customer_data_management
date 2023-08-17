@@ -6,6 +6,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 const UpdateCustomer = () => {
   const params = useParams();
@@ -15,6 +16,7 @@ const UpdateCustomer = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [loading, setLoading] = useState(true);
   const getCustomer = async () => {
     try {
       console.log(params.id);
@@ -27,6 +29,7 @@ const UpdateCustomer = () => {
       setEmail(data.email);
       setPhone(data.phone);
       setAddress(data.address);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +69,18 @@ const UpdateCustomer = () => {
   useEffect(() => {
     getCustomer();
   }, []);
-
+  if (loading) {
+    return (
+      <div>
+        <div
+          className="flex justify-center items-center"
+          style={{ height: "80vh" }}
+        >
+          <div className="loader ease-linear rounded-3xl border-8 border-t-8 border-gray-200 h-32 w-32 animate-spin"></div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div>
       <h1 className="text-4xl text-center">Update Customer</h1>
@@ -89,6 +103,7 @@ const UpdateCustomer = () => {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
+                required
               />
               <p className="text-red-500 text-xs italic">
                 Please fill out this field.
@@ -111,6 +126,7 @@ const UpdateCustomer = () => {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                required
               />
             </div>
           </div>
@@ -150,6 +166,7 @@ const UpdateCustomer = () => {
                 onChange={(e) => {
                   setAddress(e.target.value);
                 }}
+                required
               />
               <p className="text-gray-600 text-xs italic">
                 Make it as long and as crazy as you'd like
@@ -158,7 +175,13 @@ const UpdateCustomer = () => {
           </div>
 
           {/* submit */}
-          <div className="flex justify-center">
+          <div className="flex justify-between">
+            {/* cancel */}
+            <Link href={`/customer/view/${customer?.id}`}>
+              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Cancel
+              </button>
+            </Link>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Update
             </button>
